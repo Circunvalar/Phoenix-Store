@@ -1,6 +1,9 @@
 package ucentral.software.PhoenixStore.controladores;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,19 +20,23 @@ public class ControladorRegistro {
     }
 
     @GetMapping("/register")
-    public String formularioRegistro() {
+    public String formularioRegistro(Model model) {
+        model.addAttribute("usuario", new Usuario()); // 👈 Importante
         return "register";
     }
 
     @PostMapping("/register")
-    public ModelAndView resgistrarUsuario(Usuario usuario) {
+    public String registrarUsuario(@Valid Usuario usuario, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("usuario", usuario); // 👈 Para mantener datos y errores
+            return "register";
+        }
         try {
             servicioUsuario.registrarUsuario(usuario);
-            return new ModelAndView("redirect:/login");
+            return "redirect:/login";
         } catch (Exception e) {
-            ModelAndView modelAndView = new ModelAndView("register");
-            modelAndView.addObject("error", "Error al registrar el usuario");
-            return modelAndView;
+            model.addAttribute("error", "Error al registrar el usuario");
+            return "register";
         }
     }
 }

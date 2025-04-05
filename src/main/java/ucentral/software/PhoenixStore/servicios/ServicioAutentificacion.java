@@ -21,7 +21,6 @@ public class ServicioAutentificacion {
         if (usu_username == null || usu_username.isEmpty()) {
             return false;
         }
-
         Optional<Usuario> clienteOptional = repoUsuario.findByUsuusername(usu_username);
         if (clienteOptional.isPresent()) {
             Usuario clienteEncontrado = clienteOptional.get();
