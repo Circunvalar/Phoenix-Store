@@ -6,8 +6,6 @@ import ucentral.software.PhoenixStore.configs.PasswordEncrypt;
 import ucentral.software.PhoenixStore.entidades.Usuario;
 import ucentral.software.PhoenixStore.repositorios.RepoUsuario;
 
-import java.util.Optional;
-
 @Service
 public class ServicioUsuario {
 

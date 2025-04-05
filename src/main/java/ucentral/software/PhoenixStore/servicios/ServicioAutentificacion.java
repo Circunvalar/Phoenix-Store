@@ -13,8 +13,6 @@ public class ServicioAutentificacion {
     @Autowired
     RepoUsuario repoUsuario;
     @Autowired
-    ModelMapper modelMapper;
-    @Autowired
     PasswordEncrypt passwordEncrypt;
 
     public boolean inicioSesion(String usu_username, String usu_contrasena) {

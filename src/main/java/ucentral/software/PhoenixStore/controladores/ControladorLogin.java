@@ -5,15 +5,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ucentral.software.PhoenixStore.entidades.Usuario;
-import ucentral.software.PhoenixStore.servicios.ServicioUsuario;
+import ucentral.software.PhoenixStore.servicios.ServicioAutentificacion;
 
 @Controller
 public class ControladorLogin {
 
-    private final ServicioUsuario servicioUsuario;
+    private final ServicioAutentificacion servicioAutentificacion;
 
-    public ControladorLogin(ServicioUsuario servicioUsuario) {
-        this.servicioUsuario = servicioUsuario;
+    public ControladorLogin(ServicioAutentificacion servicioAutentificacion) {
+        this.servicioAutentificacion = servicioAutentificacion;
     }
 
     @GetMapping("/login")
@@ -24,10 +24,12 @@ public class ControladorLogin {
 
     @PostMapping("/login")
     public String iniciarSesion(Usuario usuario, Model model) {
-        Usuario usuarioExistente = servicioUsuario.obtenerPorUsername(usuario.getUsuusername());
+        boolean loginExitoso = servicioAutentificacion.inicioSesion(
+                usuario.getUsuusername(),
+                usuario.getUsucontrasena()
+        );
 
-        if (usuarioExistente != null && usuarioExistente.getUsucontrasena().equals(usuario.getUsucontrasena())) {
-            // Puedes guardar el usuario en sesión o redirigir
+        if (loginExitoso) {
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Usuario o contraseña incorrectos");
