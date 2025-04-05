@@ -1,24 +1,19 @@
 package ucentral.software.PhoenixStore.configs;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordEncrypt {
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public PasswordEncrypt() {
-        this.passwordEncoder = new BCryptPasswordEncoder();
+    public String encodePassword(String plainPassword) {
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
     }
 
-    // Encriptar la contraseña
-    public String encodePassword(String rawPassword) {
-        return passwordEncoder.encode(rawPassword);
-    }
-
-    // Verificar la contraseña
-    public boolean checkPassword(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
+    public boolean checkPassword(String plainPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }
