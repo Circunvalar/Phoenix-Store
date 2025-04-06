@@ -8,6 +8,7 @@ import ucentral.software.PhoenixStore.entidades.Usuario;
 import ucentral.software.PhoenixStore.repositorios.RepoUsuario;
 
 import java.util.Optional;
+
 @Service
 public class ServicioAutentificacion {
     @Autowired
@@ -16,15 +17,12 @@ public class ServicioAutentificacion {
     PasswordEncrypt passwordEncrypt;
 
     public boolean inicioSesion(String usu_username, String usu_contrasena) {
-        if (usu_username == null || usu_username.isEmpty()) {
-            return false;
-        }
         Optional<Usuario> clienteOptional = repoUsuario.findByUsuusername(usu_username);
         if (clienteOptional.isPresent()) {
-            Usuario clienteEncontrado = clienteOptional.get();
-            return passwordEncrypt.checkPassword(usu_contrasena, clienteEncontrado.getUsucontrasena());
-        } else {
-            return false;
+            Usuario cliente = clienteOptional.get();
+            return passwordEncrypt.checkPassword(usu_contrasena, cliente.getUsucontrasena());
         }
+        return false;
     }
+
 }

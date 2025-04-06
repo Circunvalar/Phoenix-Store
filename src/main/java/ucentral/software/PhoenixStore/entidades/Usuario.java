@@ -34,9 +34,8 @@ public class Usuario {
     @NotBlank(message = "Los apellidos son obligatorios")
     private String usuapellidos;
 
-    @Column
+    @Column(unique = true, nullable = false)
     @NotNull(message = "La cédula es obligatoria")
-    @Min(value = 10000000, message = "La cédula debe ser válida")
     private Long usucedula;
 
     @Column

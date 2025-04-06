@@ -78,13 +78,13 @@
 </header>
 
 <div class="login-container">
-    <p>Estoy en la vista de login</p>
     <h2>Iniciar Sesión</h2>
-    <form th:action="@{/login}" th:object="${usuario}" method="post" onsubmit="console.log('Form enviado')">
+    <form th:action="@{/login}" method="post" th:object="${usuario}">
         <input type="text" th:field="*{usuusername}" placeholder="Usuario" required />
         <input type="password" th:field="*{usucontrasena}" placeholder="Contraseña" required />
         <button type="submit">Entrar</button>
     </form>
+
 
 
     <div class="error-message" th:if="${error}">

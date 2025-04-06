@@ -2,6 +2,7 @@ package ucentral.software.PhoenixStore.servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import ucentral.software.PhoenixStore.configs.PasswordEncrypt;
 import ucentral.software.PhoenixStore.entidades.Usuario;
 import ucentral.software.PhoenixStore.repositorios.RepoUsuario;
@@ -9,8 +10,8 @@ import ucentral.software.PhoenixStore.repositorios.RepoUsuario;
 @Service
 public class ServicioUsuario {
 
-    private final RepoUsuario repoUsuario;
     private final PasswordEncrypt passwordEncrypt;
+    private final RepoUsuario repoUsuario;
 
     @Autowired
     public ServicioUsuario(RepoUsuario repoUsuario, PasswordEncrypt passwordEncrypt) {
@@ -22,12 +23,23 @@ public class ServicioUsuario {
         return repoUsuario.findByUsuusername(username).orElse(null);
     }
 
-    public void registrarUsuario(Usuario usuario) {
-        // Encriptar la contraseña antes de guardar
-        String contrasenaEncriptada = passwordEncrypt.encodePassword(usuario.getUsucontrasena());
-        usuario.setUsucontrasena(contrasenaEncriptada);
+    public String registrarUsuario(Usuario usuario, Model model) {
+        if (repoUsuario.findByUsucedula(usuario.getUsucedula()).isPresent()) {
+            model.addAttribute("error", "Ya existe un usuario con esta cédula.");
+            return "register";
+        }
 
-        // Guardar usuario
+        if (repoUsuario.findByUsuusername(usuario.getUsuusername()).isPresent()) {
+            model.addAttribute("error", "El nombre de usuario ya está en uso.");
+            return "register";
+        }
+
+        usuario.setUsurol("Cliente");
+
+        usuario.setUsucontrasena(passwordEncrypt.hashPassword(usuario.getUsucontrasena()));
+
         repoUsuario.save(usuario);
+
+        return "redirect:/login";
     }
 }
