@@ -20,15 +20,11 @@ public class ControladorInicio {
         return "home";
     }
 
-    @GetMapping("/productos")
-    public String listarProductos(Model model) {
-        List<Productos> productos = ServicioProducto.obtenerTodosLosProductos();
-        model.addAttribute("productos", productos);
-        return "productos"; // productos.html
-    }
-
     @GetMapping("/")
-    public String mostrarProductos() {
+    public String mostrarProductos(Model model) {
+        List<Productos> productos = servicioProducto.obtenerTodos();
+        model.addAttribute("productos", productos);
         return "index";
     }
+
 }

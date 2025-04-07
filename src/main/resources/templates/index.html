@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,7 +96,9 @@
 <header>
     <div class="header-left">Phoenix Store</div>
     <div class="search-container">
-        <input type="text" placeholder="Buscar productos...">
+        <label>
+            <input type="text" placeholder="Buscar productos...">
+        </label>
     </div>
     <div class="header-right">
         <form action="/login" method="get">
@@ -105,22 +107,13 @@
     </div>
 </header>
 <div class="products">
-    <div class="product">
-        <img src="/img/33333.png" alt="Producto 1">
-        <p>Producto 1</p>
-    </div>
-    <div class="product">
-        <img src="/img/4321.png" alt="Producto 2">
-        <p>Producto 2</p>
-    </div>
-    <div class="product">
-        <img src="/img/444444.png"alt="Producto 3">
-        <p>Producto 3</p>
-    </div>
-    <div class="product">
-        <img src="/img/12345.png" alt="Producto 4">
-        <p>Producto 4</p>
+    <div class="product" th:each="producto : ${productos}">
+        <img th:src="${producto.proimagenUrl}" th:alt="${producto.pronombre}" />
+        <p th:text="${producto.pronombre}">Nombre del producto</p>
+        <p><strong>$</strong><span th:text="${producto.proprecio}">0.0</span></p>
+        <button>Añadir al carrito</button>
     </div>
 </div>
+
 </body>
 </html>

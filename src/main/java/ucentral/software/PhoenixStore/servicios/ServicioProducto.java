@@ -6,16 +6,15 @@ import ucentral.software.PhoenixStore.entidades.Productos;
 import ucentral.software.PhoenixStore.repositorios.RepoProducto;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class ServicioProducto {
 
-        @Autowired
-        private static RepoProducto repoProducto;
+    @Autowired
+    private RepoProducto repoProducto;
 
-        public static List<Productos> obtenerTodosLosProductos() {
-            return (List<Productos>) repoProducto.findAll();
-        }
+    public List<Productos> obtenerTodos() {
+        return repoProducto.findAll();
+    }
 }
+

@@ -6,5 +6,6 @@ import ucentral.software.PhoenixStore.entidades.Productos;
 
 @Repository
 public interface RepoProducto extends JpaRepository<Productos, Long> {
-
 }
+
+

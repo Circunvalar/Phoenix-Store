@@ -1,7 +1,6 @@
 package ucentral.software.PhoenixStore.entidades;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -13,8 +12,8 @@ import jakarta.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "usuario")
-@Table(name = "USUARIOS")
+@Entity(name = "usuari")
+@Table(name = "USUARIO")
 @Builder
 public class Usuario {
 
