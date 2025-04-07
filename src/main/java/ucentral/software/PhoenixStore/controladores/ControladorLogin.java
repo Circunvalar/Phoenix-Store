@@ -11,11 +11,9 @@ import ucentral.software.PhoenixStore.servicios.ServicioUsuario;
 @Controller
 public class ControladorLogin {
 
-    private final ServicioUsuario servicioUsuario;
     private final ServicioAutentificacion servicioAutentificacion;
 
     public ControladorLogin(ServicioUsuario servicioUsuario, ServicioAutentificacion servicioAutentificacion) {
-        this.servicioUsuario = servicioUsuario;
         this.servicioAutentificacion = servicioAutentificacion;
     }
 
@@ -40,10 +38,5 @@ public class ControladorLogin {
         }
     }
 
-
-    @GetMapping("/home")
-    public String mostrarHome() {
-        return "home";
-    }
 }
 

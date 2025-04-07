@@ -15,6 +15,14 @@ public class ServicioProducto {
 
     public List<Productos> obtenerTodos() {
         return repoProducto.findAll();
+
     }
+    public List<Productos> obtenerTodosLosProductos() {
+        return repoProducto.findAll();
+    }
+    public List<Productos> buscarPorNombre(String query) {
+        return repoProducto.findByPronombreContainingIgnoreCase(query);
+    }
+
 }
 

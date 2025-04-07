@@ -17,9 +17,10 @@
     <div class="header-left">Phoenix Store</div>
 
     <div class="search-container">
-        <label>
-            <input type="text" placeholder="Buscar productos...">
-        </label>
+        <form id="busquedaForm">
+            <label for="queryInput"></label><input type="text" id="queryInput" name="query" placeholder="Buscar producto...">
+            <button type="submit">Buscar</button>
+        </form>
     </div>
 
     <div class="header-right">
@@ -32,7 +33,8 @@
     </div>
 </header>
 
-<div class="products">
+<!-- Resultados -->
+<div class="products" th:if="${productos != null and !#lists.isEmpty(productos)}">
     <div class="product" th:each="producto : ${productos}">
         <img th:src="${producto.proimagenUrl}" th:alt="${producto.pronombre}" />
         <p th:text="${producto.pronombre}">Nombre del producto</p>
@@ -41,5 +43,21 @@
     </div>
 </div>
 
+<!-- Sin resultados -->
+<div class="no-results" th:if="${productos != null and #lists.isEmpty(productos)}">
+    <p>No se encontraron productos.</p>
+</div>
+
+<script>
+    document.getElementById('busquedaForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita envío normal del form
+
+        const query = document.getElementById('queryInput').value;
+        if (query.trim() !== "") {
+            window.location.href = `/buscar?query=${encodeURIComponent(query)}`;
+        }
+    });
+</script>
 </body>
 </html>
+

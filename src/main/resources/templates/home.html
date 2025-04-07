@@ -5,22 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phoenix Store</title>
 
-    <!-- Tipografía y estilos globales -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-
-<!-- Header unificado -->
 <header>
     <div class="header-left">Phoenix Store</div>
 
     <div class="search-container">
-        <label>
-            <input type="text" placeholder="Buscar productos...">
-        </label>
+        <form id="busquedaForm">
+            <label for="queryInput"></label><input type="text" id="queryInput" name="query" placeholder="Buscar productos...">
+            <button type="submit">Buscar</button>
+        </form>
     </div>
 
     <div class="header-right">
@@ -31,8 +29,7 @@
     </div>
 </header>
 
-<!-- Sección de productos -->
-<div class="products">
+<div class="products" th:if="${productos != null}">
     <div class="product" th:each="producto : ${productos}">
         <img th:src="${producto.proimagenUrl}" th:alt="${producto.pronombre}" />
         <p th:text="${producto.pronombre}">Nombre del producto</p>
@@ -40,6 +37,14 @@
         <button>Añadir al carrito</button>
     </div>
 </div>
-
+<script>
+    document.getElementById('busquedaForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const query = document.getElementById('queryInput').value;
+        if (query.trim() !== '') {
+            window.location.href = '/home?query=' + encodeURIComponent(query);
+        }
+    });
+</script>
 </body>
 </html>

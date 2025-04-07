@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import ucentral.software.PhoenixStore.entidades.Productos;
 import ucentral.software.PhoenixStore.servicios.ServicioProducto;
 
@@ -23,6 +25,13 @@ public class ControladorInicio {
     @GetMapping("/")
     public String mostrarProductos(Model model) {
         List<Productos> productos = servicioProducto.obtenerTodos();
+        model.addAttribute("productos", productos);
+        return "index";
+    }
+
+    @GetMapping("/buscar")
+    public String buscarProductos(@RequestParam("query") String query, Model model) {
+        List<Productos> productos = servicioProducto.buscarPorNombre(query);
         model.addAttribute("productos", productos);
         return "index";
     }
