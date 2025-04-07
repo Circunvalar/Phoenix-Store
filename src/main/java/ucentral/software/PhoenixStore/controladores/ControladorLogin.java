@@ -28,14 +28,12 @@ public class ControladorLogin {
 
     @PostMapping("/login")
     public String iniciarSesion(Usuario usuario, Model model) {
-        boolean loginExitoso = servicioAutentificacion.inicioSesion(
-                usuario.getUsuusername(),
-                usuario.getUsucontrasena()
-        );
+        boolean loginExitoso = servicioAutentificacion.inicioSesion(usuario.getUsuusername(), usuario.getUsucontrasena());
 
         if (loginExitoso) {
             return "redirect:/home";
         } else {
+            System.out.println("Falló el login");
             model.addAttribute("error", "Usuario o contraseña incorrectos");
             model.addAttribute("usuario", usuario);
             return "login";
