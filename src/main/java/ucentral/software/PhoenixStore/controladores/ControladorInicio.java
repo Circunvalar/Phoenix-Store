@@ -26,5 +26,4 @@ public class ControladorInicio {
         model.addAttribute("productos", productos);
         return "index";
     }
-
 }
